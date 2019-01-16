@@ -12,56 +12,56 @@ import string
 import re
 
 def soundex (term):
-	"Return the soundex value to a string argument."
+    "Return the soundex value to a string argument."
 
-	# Create and compare soundex codes of English words.
-	#
-	# Soundex is an algorithm that hashes English strings into
-	# alpha-numerical value that represents what the word sounds
-	# like. For more information on soundex and some notes on the
-	# differences in implemenations visit:
-	# http://www.bluepoof.com/Soundex/info.html
-	#
-	# This version modified by Nathan Heagy at Front Logic Inc., to be
-	# compatible with php's soundexing and much faster.
-	#
-	# eAndroid / Nathan Heagy / Jul 29 2000
-	# changes by Frank Hofmann / Jan 02 2005
+    # Create and compare soundex codes of English words.
+    #
+    # Soundex is an algorithm that hashes English strings into
+    # alpha-numerical value that represents what the word sounds
+    # like. For more information on soundex and some notes on the
+    # differences in implemenations visit:
+    # http://www.bluepoof.com/Soundex/info.html
+    #
+    # This version modified by Nathan Heagy at Front Logic Inc., to be
+    # compatible with php's soundexing and much faster.
+    #
+    # eAndroid / Nathan Heagy / Jul 29 2000
+    # changes by Frank Hofmann / Jan 02 2005
 
-	# generate translation table only once. used to translate into soundex numbers
-	#table = string.maketrans('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123012002245501262301020201230120022455012623010202')
-	table = string.maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '01230120022455012623010202')
+    # generate translation table only once. used to translate into soundex numbers
+    # table = string.maketrans('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123012002245501262301020201230120022455012623010202')
+    table = term.maketrans('ABCDEFGHIJKLMNOPQRSTUVWXYZ', '01230120022455012623010202')
 
-	# check parameter
-	if not term:
-		return "0000" # could be Z000 for compatibility with other implementations
-	# end if
+    # check parameter
+    if not term:
+        return "0000" # could be Z000 for compatibility with other implementations
+    # end if
 
-		# convert into uppercase letters
-	term = string.upper(term)
-	first_char = term[0]
+    # convert into uppercase letters
+    term = term.upper()
+    first_char = term[0]
 
-	# translate the string into soundex code according to the table above
-	term = string.translate(term[1:], table)
-	
-	# remove all 0s
-	term = string.replace(term, "0", "")
-	# remove duplicate numbers in-a-row
-	str2 = first_char
-	for x in term:
-		if x != str2[-1]:
-			str2 = str2 + x
-		# end if
-	# end for
+    # translate the string into soundex code according to the table above
+    term = term.translate(table)
 
-	# pad with zeros
-	str2 = str2+"0"*len(str2)
+    # remove all 0s
+    term = term.replace("0", "")
+    # remove duplicate numbers in-a-row
+    str2 = first_char
+    for x in term:
+        if x != str2[-1]:
+            str2 = str2 + x
+    # end if
+    # end for
 
-	# take the first four letters
-	return_value = str2[:4]
+    # pad with zeros
+    str2 = str2+"0"*len(str2)
 
-	# return value
-	return return_value
+    # take the first four letters
+    return_value = str2[:4]
+
+    # return value
+    return return_value
 
 def metaphone (term):
 	"returns metaphone code for a given string"
